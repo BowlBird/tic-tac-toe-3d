@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://vfi4u644d3c0"]
+
+[node name="HelloWorld" type="HelloWorld"]
