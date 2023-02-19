@@ -1,0 +1,10 @@
+[gd_resource type="Environment" format=3 uid="uid://d3802vxev3sxj"]
+
+[resource]
+background_mode = 3
+ambient_light_source = 1
+glow_enabled = true
+glow_mix = 0.52
+glow_bloom = 1.0
+glow_blend_mode = 4
+adjustment_brightness = 1.84

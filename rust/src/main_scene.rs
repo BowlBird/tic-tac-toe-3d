@@ -5,7 +5,7 @@ use godot::prelude::*;
 //change from 'Node' to whatever component you are using.
 #[derive(GodotClass)]
 #[class(base=Node)]
-pub struct HelloWorld {
+pub struct Main {
 
     //add extra fields here
 
@@ -15,30 +15,25 @@ pub struct HelloWorld {
 
 //add functions to be used here
 #[godot_api]
-impl HelloWorld {
-    #[func]
-    pub fn example(&mut self) {
-
-    }
-}
+impl Main {}
 
 //for initalizing and frame by frame logic.
 #[godot_api]
-impl GodotExt for HelloWorld {
+impl GodotExt for Main {
 
     //initalize
     fn init(base: Base<Node>) -> Self {
 
-        godot_print!("Hello, World!");
+        godot_print!("Hello, World from Main!");
         
-        HelloWorld {
+        Main {
             base,
         }
     }
 
     //after initalized
     fn ready(&mut self) {
-        
+
     }
 
     //per frame method call

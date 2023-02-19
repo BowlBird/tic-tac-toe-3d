@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0fnbuoaqxtef"]
+
+[ext_resource type="Texture2D" uid="uid://brufqmo6k1ke2" path="res://images/BowlBirdLogoWhite.png" id="1_gc4el"]
+[ext_resource type="Environment" uid="uid://d3802vxev3sxj" path="res://environments/splash-screen-env.tres" id="2_5ckyp"]
+[ext_resource type="FontFile" uid="uid://bf1te6ojc0qmo" path="res://fonts/Tajawal-Light.ttf" id="3_rgx0j"]
+
+[sub_resource type="Animation" id="Animation_uavk7"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:glow_bloom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WorldEnvironment:environment:glow_mix")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.52, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_h8m7w"]
+resource_name = "spash-screen-animation"
+length = 5.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:glow_bloom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.146133, -0.25, 0, 0.25, 0, 0.0588584, -0.25, 0, 0.25, 0, 0.0788584, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2, 3, 4.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WorldEnvironment:environment:glow_mix")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.663959, -1, 0.325823, 0.3, -0.0349097, 0.52, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2, 3, 4.4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_akrnf"]
+_data = {
+"RESET": SubResource("Animation_uavk7"),
+"spash-screen-animation": SubResource("Animation_h8m7w")
+}
+
+[node name="SplashScreen" type="SplashScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = -640.0
+offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+
+[node name="Logo" type="Sprite2D" parent="BoxContainer"]
+scale = Vector2(0.0976562, 0.0976562)
+texture = ExtResource("1_gc4el")
+centered = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="BoxContainer"]
+environment = ExtResource("2_5ckyp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BoxContainer"]
+autoplay = "spash-screen-animation"
+libraries = {
+"": SubResource("AnimationLibrary_akrnf")
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 20
+
+[node name="CenterContainer" type="CenterContainer" parent="BoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BoxContainer/MarginContainer/CenterContainer"]
+custom_minimum_size = Vector2(300, 160.033)
+layout_mode = 2
+theme_override_constants/line_separation = -25
+theme_override_constants/outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_rgx0j")
+theme_override_font_sizes/normal_font_size = 109
+text = "Bowl
+Bird"
+scroll_active = false
+autowrap_mode = 0
+deselect_on_focus_loss_enabled = false

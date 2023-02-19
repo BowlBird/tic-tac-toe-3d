@@ -11,6 +11,20 @@ config_version=5
 [application]
 
 config/name="tic-tac-toe-3d"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://scenes/splash-screen.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://images/icon.svg"
+run/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
