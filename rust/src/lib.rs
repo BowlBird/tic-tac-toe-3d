@@ -1,6 +1,7 @@
 use godot::prelude::*;
 
 //put references to other rust scripts here
+mod board;
 mod main_scene;
 mod splash_screen;
 
