@@ -1,2 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
+
+# vscode workspace
+tic-tac-toe-3d.code-workspace
+
+#bat file
+tic-tac-toe-build.bat
