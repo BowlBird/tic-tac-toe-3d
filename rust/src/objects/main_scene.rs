@@ -1,8 +1,9 @@
 use godot::engine::node::InternalMode;
-use godot::engine::packed_scene::*;
 use godot::{prelude::*};
 
-use crate::game::*;
+use crate::objects::game::Game;
+
+use super::game::player::Player;
 
 //acts as base class for each file
 //change from 'Node' to whatever component you are using.
@@ -32,15 +33,13 @@ impl GodotExt for Main {
 
     //after initalized
     fn ready(&mut self) {
-        let game: Gd<Node> = (load("res://scenes/game.tscn") as Gd<PackedScene>)
-                                        .instantiate(GenEditState::GEN_EDIT_STATE_DISABLED)
-                                        .expect("Could not load res://scenes/game.tscn!");
-        self.add_child(game.share(), false, InternalMode::INTERNAL_MODE_DISABLED);
-        
-        let mut binding = game.cast::<Game>();
-        let mut game = binding.bind_mut();
-        
-        game.set_players(2)
+        let players = vec!(
+            Player::new(), Player::new(),
+        );
+        let board_size = (4,4,4);
+
+        let mut game = Game::new(board_size, players);
+        self.add_child(game.upcast(), true, InternalMode::INTERNAL_MODE_DISABLED);
     }
 
     //per frame method call

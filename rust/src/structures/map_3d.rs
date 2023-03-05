@@ -8,14 +8,15 @@ pub type Step = (i32, i32, i32);
 //--------------------------------------------------------------------------------------
 
 /// Struct representing the board
-pub struct Board<T> {
+#[derive(Debug)]
+pub struct Map3D<T> {
     x_size: i32,
     y_size: i32,
     z_size: i32,
     map: HashMap<Point, T>, //holds point, player pairs
 }
 
-impl<T> Board<T> {
+impl<T> Map3D<T> {
     /// constructor for just supplying bounds
     pub fn new(x_size: i32, y_size: i32, z_size: i32) -> Result<Self, &'static str> {
 
@@ -82,7 +83,7 @@ mod tests {
 
     #[test]
     fn new_good_input() {
-        let board: Board<i32> = Board::new(1,1,1).unwrap();
+        let board: Map3D<i32> = Map3D::new(1,1,1).unwrap();
 
         assert!(board.x_size == 1 && board.y_size == 1 && board.z_size == 1);
     }
@@ -90,24 +91,24 @@ mod tests {
     #[test]
     #[should_panic]
     fn new_bad_input() {
-        let board: Board<i32> = Board::new(0,0,0).unwrap();
+        let board: Map3D<i32> = Map3D::new(0,0,0).unwrap();
     }
 
     #[test]
     fn in_bounds_good_input() {
-        let board: Board<i32> = Board::new(1,1,1).unwrap();
+        let board: Map3D<i32> = Map3D::new(1,1,1).unwrap();
         assert!(board.in_bounds(&(0,0,0)));
     }
 
     #[test]
     fn in_bounds_bad_input() {
-        let board: Board<i32> = Board::new(1,1,1).unwrap();
+        let board: Map3D<i32> = Map3D::new(1,1,1).unwrap();
         assert!(!board.in_bounds(&(1,1,1)));
     }
 
     #[test]
     fn insert_good_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((3,4,0), 0).unwrap();
         //just should not panic
     }
@@ -115,13 +116,13 @@ mod tests {
     #[test]
     #[should_panic]
     fn insert_bad_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((6,-1,0), 10).unwrap();
     }
 
     #[test]
     fn get_point_good_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((3,4,0), 1).unwrap();
         assert_eq!(board.get_point(&(3,4,0)).unwrap().expect(""), &1);
     }
@@ -129,14 +130,14 @@ mod tests {
     #[test]
     #[should_panic]
     fn get_point_bad_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((6,-1,0), 10).unwrap();
         board.get_point(&(-1,4,0)).unwrap().expect("");
     }
 
     #[test]
     fn get_line_good_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((3,4,0), 1).unwrap();
         board.insert((3,4,1), 2).unwrap();
         let originalOptionVals = board.get_line(&(3,4,0), &(0,0,1)).unwrap();
@@ -157,7 +158,7 @@ mod tests {
     #[test]
     #[should_panic]
     fn get_line_bad_input() {
-        let mut board: Board<i32> = Board::new(5,5,5).unwrap();
+        let mut board: Map3D<i32> = Map3D::new(5,5,5).unwrap();
         board.insert((6,-1,0), 10).unwrap();
         board.get_point(&(-1,4,0)).unwrap().expect("");
     }

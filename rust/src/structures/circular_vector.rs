@@ -32,6 +32,12 @@ impl<T> CircularVector<T> {
         }
     }
 
+    pub fn remove(&mut self) -> Result<T, &'static str> {
+        match self.is_empty() {
+            true => Err("Tried to remove past vector length!")?,
+            false => Ok(self.vec.remove(self.index)),
+        }
+    }
 
     /// inserts element after current element
     pub fn insert_after(&mut self, element: T)  {
@@ -55,12 +61,21 @@ impl<T> CircularVector<T> {
 
     /// rotates the vector counter-clockwise
     pub fn rotate_back(&mut self) {
-        self.index = (self.index - 1) % self.vec.len()
+        //needed as negative values are unsupported.
+        if self.index == 0 {
+            self.index = self.size()
+        }
+        self.index = self.index - 1 % self.size()
     }
 
     /// returns whether the list is empty or not
     pub fn is_empty(&self) -> bool {
         self.vec.is_empty()
+    }
+
+    /// returns size of the vector
+    pub fn size(&self) -> usize {
+        self.vec.len()
     }
 }
 
@@ -102,7 +117,9 @@ mod tests {
         let mut cv: CircularVector<i32> = CircularVector::from(vec);
         
         cv.insert_after(10);
-        cv.rotate_back();
+        for i in 0..(cv.size() - 1) {
+            cv.rotate_back();
+        }
 
         assert_eq!(cv.get().unwrap(), &10);
     }
@@ -112,6 +129,13 @@ mod tests {
         let cv: CircularVector<i32> = CircularVector::new();
 
         assert!(cv.is_empty());
+    }
+
+    #[test]
+    fn size() {
+        let vec = vec![1,4,12,7];
+        let cv = CircularVector::from(vec);
+        assert_eq!(cv.size(), 4);
     }
 
 }
